@@ -7,6 +7,7 @@
 ---@type LazySpec
 return {
   "AstroNvim/astrocommunity",
+  { import = "astrocommunity.recipes.picker-lsp-mappings" },
   { import = "astrocommunity.motion.flash-nvim" },
   { import = "astrocommunity.markdown-and-latex.render-markdown-nvim" },
   -- Language package
