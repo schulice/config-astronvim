@@ -9,6 +9,7 @@ local function paste()
     vim.fn.getregtype "",
   }
 end
+
 if vim.env.SSH_TTY then
   vim.g.clipboard = {
     name = "OSC 52",
@@ -22,3 +23,15 @@ if vim.env.SSH_TTY then
     },
   }
 end
+
+-- vim.keymap.set("n", "<C-\\>", "<cmd>ToggleTerm<cr>", {
+--   noremap = true,
+--   silent = true,
+--   desc = "Toggle terminal",
+-- })
+
+vim.keymap.set("n", "<C-_>", "<cmd>ToggleTerm<cr>", {
+  noremap = true,
+  silent = true,
+  desc = "Toggle terminal",
+})
