@@ -106,14 +106,11 @@ return {
       -- this would disable semanticTokensProvider for all clients
       -- client.server_capabilities.semanticTokensProvider = nil
       if client.name == "clangd" then
-        -- 为 clangd 创建自定义按键映射
-        -- <Leader>lH: 切换头文件/源文件
-        -- 'ClangdSwitchSourceHeader' 是 clangd 提供的自定义 LSP 命令
         vim.keymap.set("n", "<Leader>lH", "<cmd>ClangdSwitchSourceHeader<cr>", {
           noremap = true,
           silent = true,
-          buffer = bufnr, -- 将映射绑定到当前缓冲区
-          desc = "Switch between header/source (clangd)",
+          buffer = bufnr,
+          desc = "SwitchSourceHeader(clangd)",
         })
       end
     end,
