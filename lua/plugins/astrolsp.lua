@@ -22,12 +22,8 @@ return {
       format_on_save = {
         enabled = true, -- enable or disable format on save globally
         allow_filetypes = { -- enable format on save for specified filetypes only
-          -- "go",
         },
         ignore_filetypes = { -- disable format on save for specified filetypes
-          -- "python",
-          "cpp",
-          "c",
         },
       },
       disabled = { -- disable formatting capabilities for the listed language servers
@@ -42,12 +38,18 @@ return {
     -- enable servers that you already have installed without mason
     servers = {
       "clangd",
-      "rust_analyzer"
+      "rust_analyzer",
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
-      clangd = { capabilities = { offsetEncoding = "utf-8" } },
+      clangd = {
+        capabilities = {
+          documentFormattingProivider = false,
+          documentRangeFormattingProivider = false,
+          offsetEncoding = "utf-8",
+        },
+      },
     },
     -- customize how language servers are attached
     handlers = {
@@ -103,6 +105,17 @@ return {
     on_attach = function(client, bufnr)
       -- this would disable semanticTokensProvider for all clients
       -- client.server_capabilities.semanticTokensProvider = nil
+      if client.name == "clangd" then
+        -- 为 clangd 创建自定义按键映射
+        -- <Leader>lH: 切换头文件/源文件
+        -- 'ClangdSwitchSourceHeader' 是 clangd 提供的自定义 LSP 命令
+        vim.keymap.set("n", "<Leader>lH", "<cmd>ClangdSwitchSourceHeader<cr>", {
+          noremap = true,
+          silent = true,
+          buffer = bufnr, -- 将映射绑定到当前缓冲区
+          desc = "Switch between header/source (clangd)",
+        })
+      end
     end,
   },
 }

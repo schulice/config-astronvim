@@ -1,3 +1,6 @@
+-- now do not enable
+if true then return {} end
+
 return {
   ---@type LazySpec
   {
