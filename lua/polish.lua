@@ -1,7 +1,3 @@
--- This will run last in the setup process.
--- This is just pure lua so anything that doesn't
--- fit in the normal config locations above can go here
-
 -- Only copy on osc52
 local function paste()
   return {
@@ -24,14 +20,13 @@ if vim.env.SSH_TTY then
   }
 end
 
--- vim.keymap.set("n", "<C-\\>", "<cmd>ToggleTerm<cr>", {
+-- we remove the clipboard setting before
+
+-- <C-/> should also activate terminal
+-- now move to core but not test
+-- vim.keymap.set("n", "<C-_>", "<cmd>ToggleTerm<cr>", {
 --   noremap = true,
 --   silent = true,
 --   desc = "Toggle terminal",
 -- })
-
-vim.keymap.set("n", "<C-_>", "<cmd>ToggleTerm<cr>", {
-  noremap = true,
-  silent = true,
-  desc = "Toggle terminal",
-})
+--
