@@ -1,22 +1,7 @@
 ---@type LazySpec
 return {
   {
-    "zenbones-theme/zenbones.nvim",
-    lazy = true,
-    specs = {
-      "astrocore",
-      opts = {
-        options = {
-          g = {
-            zenbones_compat = 1,
-          },
-        },
-      },
-    },
-  },
-  {
     "AstroNvim/astroui",
-    ---@type AstroUIOpts
     specs = {
       "astrocore",
       opts = {
@@ -28,6 +13,7 @@ return {
         },
       },
     },
+    ---@type AstroUIOpts
     opts = {
       -- change colorscheme
       colorscheme = "astrodark",

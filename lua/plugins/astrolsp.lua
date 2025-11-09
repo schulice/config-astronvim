@@ -32,10 +32,40 @@ return {
     servers = {
       "clangd",
       "rust_analyzer",
+      "ruff",
+      "basedpyright",
+      "zls",
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
+      basedpyright = {
+        before_init = function(_, ctx)
+          if not ctx.settings then ctx.settings = {} end
+          if not ctx.settings.python then ctx.settings.python = {} end
+          ctx.settings.python.pythonPath = vim.fn.exepath "python"
+        end,
+        settings = {
+          basedpyright = {
+            analysis = {
+              typeCheckingMode = "basic",
+              autoImportCompletions = true,
+              diagnosticSeverityOverrides = {
+                reportUnusedImport = "information",
+                reportUnusedFunction = "information",
+                reportUnusedVariable = "information",
+                reportGeneralTypeIssues = "none",
+                reportOptionalMemberAccess = "none",
+                reportOptionalSubscript = "none",
+                reportPrivateImportUsage = "none",
+              },
+            },
+          },
+        },
+      },
+      ruff = {
+        on_attach = function(client) client.server_capabilities.hoverProvider = false end,
+      },
       clangd = {
         cmd = { "clangd", "--header-insertion=never" },
         capabilities = {
