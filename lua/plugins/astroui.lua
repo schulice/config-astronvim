@@ -7,7 +7,9 @@ return {
       opts = {
         options = {
           opt = {
-            -- set light theme to default
+            -- Set light theme to default.
+            -- We give up auto change theme by osc 2031 due to the bug that
+            -- highlight group error after lazygit open file with flatten nvim
             background = "light",
           },
         },
