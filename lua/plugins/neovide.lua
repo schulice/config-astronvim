@@ -4,7 +4,8 @@ return {
   "AstroNvim/astrocore",
   ---@param opts AstroCoreOpts
   opts = function(_, opts)
-    opts = require("astrocore").extend_tbl(opts, {
+    local core = require "astrocore"
+    opts = core.extend_tbl(opts, {
       options = {
         opt = {
           guifont = "JetBrains Maple Mono:h15",
@@ -37,7 +38,7 @@ return {
           vim.g.neovide_input_ime = false
         end
       end
-      opts = require("astrocore").extend_tbl(opts, {
+      opts = core.extend_tbl(opts, {
         autocmds = {
           ime_input = {
             {
