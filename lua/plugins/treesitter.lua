@@ -10,7 +10,9 @@ return {
       "proto",
       "starlark",
       "doxygen",
-      -- add more arguments for adding more treesitter parsers
+    },
+    ignore_install = {
+      "org",
     },
   },
 }

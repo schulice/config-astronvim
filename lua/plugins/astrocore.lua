@@ -54,6 +54,17 @@ return {
           silent = true,
           desc = "Toggle terminal",
         },
+        -- ["<leader>o"] = { function() end, desc = "" },
+        ["<leader>E"] = {
+          function()
+            if vim.bo.filetype == "neo-tree" then
+              vim.cmd.wincmd "p"
+            else
+              vim.cmd.Neotree "focus"
+            end
+          end,
+          desc = "Toggle Explorer Focus",
+        },
       },
     },
   },
