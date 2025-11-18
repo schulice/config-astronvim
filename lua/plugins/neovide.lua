@@ -16,12 +16,12 @@ return {
           neovide_padding_top = 0,
           neovide_padding_bottom = 0,
           neovide_padding_right = 0,
-          neovide_padding_left = 0,
+          neovide_padding_left = 5,
           -- windows
-          neovide_opacity = 1,
+          -- neovide_opacity = 1,
           -- background color
-          neovide_normal_opacity = 1,
-          neovide_window_blurred = false,
+          -- neovide_normal_opacity = 1,
+          -- neovide_window_blurred = false,
           -- neovide_position_animation_length = 0.15,
           -- neovide_scroll_animation_length = 0.3,
           -- neovide_profiler = false
