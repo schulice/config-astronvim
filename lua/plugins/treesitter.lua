@@ -10,6 +10,7 @@ return {
       "proto",
       "starlark",
       "doxygen",
+      "yaml",
     },
     ignore_install = {
       "org",
