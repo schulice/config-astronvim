@@ -17,6 +17,8 @@ return {
         allow_filetypes = { -- enable format on save for specified filetypes only
         },
         ignore_filetypes = { -- disable format on save for specified filetypes
+          "c",
+          "cpp",
         },
       },
       disabled = { -- disable formatting capabilities for the listed language servers
@@ -35,6 +37,7 @@ return {
       "ruff",
       "basedpyright",
       "zls",
+      "gopls",
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
