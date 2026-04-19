@@ -55,9 +55,11 @@ return {
         init = function()
           local get_hlgroup = require("astroui").get_hlgroup
           local tabline = get_hlgroup "TabLine"
+          local normal = get_hlgroup "Normal"
           return {
             NeoTreeTabInactive = tabline,
             NeoTreeTabSeparatorInactive = tabline,
+            winbar = normal,
           }
         end,
       },

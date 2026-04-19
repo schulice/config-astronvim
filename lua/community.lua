@@ -18,6 +18,7 @@ return {
   -- { import = "astrocommunity.terminal-integration.nvim-unception" },
   { import = "astrocommunity.terminal-integration.flatten-nvim" },
   { import = "astrocommunity.markdown-and-latex.render-markdown-nvim" },
+  { import = "astrocommunity.indent.snacks-indent-hlchunk" },
 
   -- Language lsp package, may remove them later
   { import = "astrocommunity.pack.lua" },
