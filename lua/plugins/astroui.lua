@@ -59,7 +59,8 @@ return {
           return {
             NeoTreeTabInactive = tabline,
             NeoTreeTabSeparatorInactive = tabline,
-            winbar = normal,
+            WinBarNC = normal,
+            WinBar = normal,
           }
         end,
       },

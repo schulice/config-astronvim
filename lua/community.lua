@@ -11,7 +11,7 @@ return {
   { import = "astrocommunity.recipes.vscode-icons" },
 
   -- VSCode-Nvim integration
-  { import = "astrocommunity.recipes.vscode" },
+  -- { import = "astrocommunity.recipes.vscode" },
 
   -- Basic
   { import = "astrocommunity.motion.flash-nvim" },

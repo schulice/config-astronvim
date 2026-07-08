@@ -5,7 +5,7 @@ return {
   opts = {
     -- Configuration table of features provided by AstroLSP
     features = {
-      codelens = true, -- enable/disable codelens refresh on start
+      codelens = false, -- enable/disable codelens refresh on start
       inlay_hints = false, -- enable/disable inlay hints on start
       semantic_tokens = true, -- enable/disable semantic token highlighting
     },
@@ -13,7 +13,7 @@ return {
     formatting = {
       -- control auto formatting on save
       format_on_save = {
-        enabled = true, -- enable or disable format on save globally
+        enabled = false, -- enable or disable format on save globally
         allow_filetypes = { -- enable format on save for specified filetypes only
         },
         ignore_filetypes = { -- disable format on save for specified filetypes
@@ -33,49 +33,36 @@ return {
     -- enable servers that you already have installed without mason
     servers = {
       "clangd",
-      "rust_analyzer",
+      "starpls",
       "ruff",
-      "basedpyright",
-      "zls",
-      "gopls",
+      "protobuf_lsp",
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
-      basedpyright = {
-        before_init = function(_, ctx)
-          if not ctx.settings then ctx.settings = {} end
-          if not ctx.settings.python then ctx.settings.python = {} end
-          ctx.settings.python.pythonPath = vim.fn.exepath "python"
-        end,
-        settings = {
-          basedpyright = {
-            analysis = {
-              typeCheckingMode = "basic",
-              autoImportCompletions = true,
-              diagnosticSeverityOverrides = {
-                reportUnusedImport = "information",
-                reportUnusedFunction = "information",
-                reportUnusedVariable = "information",
-                reportGeneralTypeIssues = "none",
-                reportOptionalMemberAccess = "none",
-                reportOptionalSubscript = "none",
-                reportPrivateImportUsage = "none",
-              },
-            },
-          },
-        },
-      },
       ruff = {
         on_attach = function(client) client.server_capabilities.hoverProvider = false end,
       },
       clangd = {
-        cmd = { "clangd", "--header-insertion=never" },
+        cmd = {
+          "clangd",
+          "--header-insertion=never",
+          "--log=error",
+          "--malloc-trim",
+          "--background-index=true",
+          "-j=8",
+        },
         capabilities = {
           documentFormattingProivider = false,
           documentRangeFormattingProivider = false,
           offsetEncoding = "utf-8",
         },
+        filetypes = { "c", "cpp" },
+      },
+      protobuf_lsp = {
+        cmd = { "protobuf-lsp" },
+        settings = { additionalProtoDirs = {} },
+        filetypes = { "proto", "protobuf" },
       },
     },
     -- customize how language servers are attached
@@ -87,28 +74,6 @@ return {
       -- rust_analyzer = false, -- setting a handler to false will disable the set up of that language server
       -- pyright = function(_, opts) require("lspconfig").pyright.setup(opts) end -- or a custom handler function can be passed
     },
-    -- Configure buffer local auto commands to add when attaching a language server
-    autocmds = {
-      -- first key is the `augroup` to add the auto commands to (:h augroup)
-      lsp_codelens_refresh = {
-        -- Optional condition to create/delete auto command group
-        -- can either be a string of a client capability or a function of `fun(client, bufnr): boolean`
-        -- condition will be resolved for each client on each execution and if it ever fails for all clients,
-        -- the auto commands will be deleted for that buffer
-        cond = "textDocument/codeLens",
-        -- cond = function(client, bufnr) return client.name == "lua_ls" end,
-        -- list of auto commands to set
-        {
-          -- events to trigger
-          event = { "InsertLeave", "BufEnter" },
-          -- the rest of the autocmd options (:h nvim_create_autocmd)
-          desc = "Refresh codelens (buffer)",
-          callback = function(args)
-            if require("astrolsp").config.features.codelens then vim.lsp.codelens.refresh { bufnr = args.buf } end
-          end,
-        },
-      },
-    },
     -- mappings to be set up on attaching of a language server
     mappings = {
       n = {
@@ -118,12 +83,14 @@ return {
           desc = "Declaration of current symbol",
           cond = "textDocument/declaration",
         },
-        ["<Leader>uY"] = {
-          function() require("astrolsp.toggles").buffer_semantic_tokens() end,
-          desc = "Toggle LSP semantic highlight (buffer)",
-          cond = function(client)
-            return client.supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens ~= nil
+        ["<Leader>lB"] = {
+          function()
+            local current = vim.api.nvim_buf_get_name(0)
+            if current == "" then return end
+            local target = vim.fs.joinpath(vim.fs.dirname(current), "BUILD")
+            if vim.fn.filereadable(target) == 1 then vim.cmd.edit(vim.fn.fnameescape(target)) end
           end,
+          desc = "Open BUILD file on current direction",
         },
       },
     },
